@@ -29,6 +29,7 @@ $.fn.shineonWin = function(options,fahterid)
 	"cancel":function(){},
 	"timeout":0,//无按钮，几秒后消失
 	"timefn":function(){},//消失后回调
+	"param":""//弹窗临时调用数据，供iframe内部调用或其他页面调用
 	},
 	winlen=0,
 	settings  = $.extend({},defaults,options),
@@ -40,7 +41,7 @@ $.fn.shineonWin = function(options,fahterid)
 		var seeheight=document.documentElement.clientHeight;
 		var allhei=document.body.scrollHeight,heis;
 		heis=document.body.scrollTop+seeheight/2-parseInt(settings['height'])/2+"px";
-		var html="<div class=\"win\" id=\"win"+winlen+"\">";
+		var html="<div class=\"win\" id=\"win"+winlen+"\" param=\""+settings['param']+"\">";
 		if(settings['position']=="auto")
 		{
 			html+="<div class=\"win_content\" style=\"height: "+settings['height']+";width:"+settings['width']+";margin:auto\">";
