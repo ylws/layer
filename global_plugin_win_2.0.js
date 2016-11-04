@@ -66,7 +66,7 @@ $.fn.shineonWin = function(options,fahterid)
 			}
 			else if(settings['type']=="iframe")
 			{
-				html+=	'<iframe scrolling="'+settings['scroll']+'" frameborder="0" src="'+settings['typeval']+'" class="iframe" style="margin:'+settings['typemargin']+';padding:'+settings['typepadding']+';width:'+settings['typewid']+';height:'+settings['typehei']+'"/>';
+				html+=	'<iframe param="'+settings['param']+'" scrolling="'+settings['scroll']+'" frameborder="0" src="'+settings['typeval']+'" class="iframe" style="margin:'+settings['typemargin']+';padding:'+settings['typepadding']+';width:'+settings['typewid']+';height:'+settings['typehei']+'"/>';
 			}
 			else
 			{
@@ -117,18 +117,18 @@ $.fn.shineonWin = function(options,fahterid)
 	//点击关闭，隐藏播放窗口
 	var winobj=document.getElementsByClassName("win");
 	for(var i=0;i<winobj.length;i++ ){
-		winobj[i].getElementsByClassName("close")[0].onclick=function(){
+		winobj[i].getElementsByClassName("close")[0].addEventListener("click",function(){
 			var parentid=this.parentNode.parentNode.parentNode.getAttribute("id");
 			settings['cancel'](parentid);
-		}
+		},false)
 	}
 	//点击确定，隐藏播放窗口
 	for(var i=0;i<winobj.length;i++ ){
 		if(winobj[i].getElementsByClassName("save").length>0){
-			winobj[i].getElementsByClassName("save")[0].onclick=function(){
+			winobj[i].getElementsByClassName("save")[0].addEventListener("click",function(){
 				var parentid=this.parentNode.parentNode.parentNode.getAttribute("id");
 				settings['sure'](parentid);
-			}
+			},false)
 		}
 		
 	}
@@ -136,10 +136,12 @@ $.fn.shineonWin = function(options,fahterid)
 	//点击取消，隐藏播放窗口
 	for(var i=0;i<winobj.length;i++ ){
 		if(winobj[i].getElementsByClassName("cancel").length>0){
-			winobj[i].getElementsByClassName("cancel")[0].onclick=function(){
+			winobj[i].getElementsByClassName("cancel")[0].addEventListener("click",function(){
 				var parentid=this.parentNode.parentNode.parentNode.getAttribute("id");
 				settings['cancel'](parentid);
-			}
+			},false)
 		}
 	}
+	
+	//console.log(settings['btn'].length)
 }
