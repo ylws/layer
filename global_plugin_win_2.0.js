@@ -27,6 +27,7 @@ $.fn.shineonWin = function(options,fahterid)
 	"scroll":"no",//no,yes,auto
 	"sure":function(){},
 	"cancel":function(){},
+	"close":function(){},
 	"timeout":0,//无按钮，几秒后消失
 	"timefn":function(){},//消失后回调
 	"param":""//弹窗临时调用数据，供iframe内部调用或其他页面调用
@@ -119,7 +120,8 @@ $.fn.shineonWin = function(options,fahterid)
 	for(var i=0;i<winobj.length;i++ ){
 		winobj[i].getElementsByClassName("close")[0].addEventListener("click",function(){
 			var parentid=this.parentNode.parentNode.parentNode.getAttribute("id");
-			settings['cancel'](parentid);
+			settings['close']();
+			$("#"+parentid).remove();
 		},false)
 	}
 	//点击确定，隐藏播放窗口

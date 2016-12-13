@@ -1,0 +1,193 @@
+<html>
+	<body>
+		<style type="text/css">
+			*{
+				background: rgba(0,0,0,0.5);
+				font-size: 14px;
+				font-family: "arial, helvetica, sans-serif";
+				color: #fff;
+				float: left;
+				margin: 0;
+				padding: 0;
+				width: 100%;
+			}
+			b{
+				background: none;
+				font-size: 16px;
+				color: blanchedalmond;
+				margin: 10px 0;
+			}
+		</style>
+<b>//弹窗各参数<b>
+<pre>
+	"width":"287px",//弹窗宽度
+	"height":"215px",//弹窗高度
+	"type":"txt",//弹窗类型input/txt/iframe/html
+	"typemargin":"0px",//html input，iframe设置margin
+	"typepadding":"0px",//html input，iframe设置padding
+	"typeval":"",//input操作后的值/iframe的src地址
+	"typewid":"100%",//iframe宽度
+	"typehei":"32px",//iframe高度
+	"title":"标题",
+	"placehloder":"",
+	"position":"auto",//auto为水平垂直居中，self为自定义传参+positionx,positiony
+	"positionx":"auto",//positon为self时自定义x位置
+	"positiony":"auto",//positon为self时自定义y位置
+	"content":'',//嵌入的html代码,文本
+	"btnshow":"block",//按钮显示隐藏block/none,通用---
+	"btn":[["cancel","取&nbsp;&nbsp;消"],["save","保&nbsp;&nbsp;存"]],//按钮自定义
+	"headshow":"block",//弹窗头部显示,通用---
+	"scroll":"no",//no,yes,auto//iframe滚动与否
+	"sure":function(){},//确定回调
+	"cancel":function(){},//取消回调
+	"close":function(){},//X 回调
+	"timeout":0,//无按钮，几秒后消失
+	"timefn":function(){},//消失后回调
+	"param":""//弹窗临时调用数据，供iframe内部调用或其他页面调用
+</pre>
+<b>//弹窗提示信息<b>
+	<pre>
+$().shineonWin({
+	"type":"txt",//弹窗类型input/txt/iframe/html
+	"title":"提示信息：",//标题
+	"position":"auto",//位置//auto为水平垂直居中，self为自定义传参+positionx,positiony
+	"content":"未找到资源,无法预览!",//提示内容
+	"timeout":1500,//弹窗显示时间
+})
+$().shineonWin({
+	"type":"txt",//弹窗类型input/txt/iframe/html
+	"title":"提示信息：",//标题
+	"position":"self",//位置//auto为水平垂直居中，self为自定义传参+positionx,positiony
+	"content":"未找到资源无法预览!",//提示内容
+	"timeout":1500,//弹窗显示时间
+})
+</pre>
+<b>//弹窗提示信息+确定取消按钮<b>
+<pre>
+$().shineonWin({
+	"type":"txt",//弹窗类型input/inputtxt/iframe/txt
+	"title":"提示消息",//标题
+	"content":'是否删除',//提示内容
+	"position":"self",//位置//auto为水平垂直居中，self为自定义传参+positionx,positiony
+	"btn":[["cancel","取&nbsp;&nbsp;消"],["save","确&nbsp;&nbsp;定"]],//按钮自定义+45
+	"sure":function(id){//确定
+		$("#"+id).remove();
+	},
+	"cancel":function(id){//取消
+		$("#"+id).remove();
+	}
+});
+</pre>
+<b>//弹窗提示信息+提示后操作<b>
+	<pre>
+$().shineonWin({
+		"type":"txt",//弹窗类型input/txt/iframe/html
+		"title":"提示信息：",//标题
+		"position":"auto",//位置//auto为水平垂直居中，self为自定义传参+positionx,positiony
+		"content":"未找到资源,无法预览!",//提示内容
+		"timeout":1500,//弹窗显示时间
+		"timefn":function(){//弹窗消失后操作
+			//TODO
+		}
+})
+</pre>
+<b>//弹窗提示信息 input placeholder<b>
+	<pre>
+$().shineonWin({
+		"type":"input",//弹窗类型input/txt/iframe/html
+		"title":"提示信息：",//标题
+		"position":"auto",//位置//auto为水平垂直居中，self为自定义传参+positionx,positiony
+		"typeval":"",//input val
+		"placeholder":"aaadd",//input placeholder
+		"btn":[["cancel","取&nbsp;&nbsp;消"],["save","确&nbsp;&nbsp;定"]],//按钮自定义+45
+		"sure":function(id){//确定
+			$("#"+id).remove();
+		},
+		"cancel":function(id){//取消
+			$("#"+id).remove();
+		}
+})
+</pre>
+<b>//弹窗提示信息 input val<b>
+	<pre>
+$().shineonWin({
+		"type":"input",//弹窗类型input/txt/iframe/html
+		"title":"提示信息：",//标题
+		"position":"auto",//位置//auto为水平垂直居中，self为自定义传参+positionx,positiony
+		"typeval":"aaa",//input val
+		"placeholder":"",//input placeholder
+		"btn":[["cancel","取&nbsp;&nbsp;消"],["save","确&nbsp;&nbsp;定"]],//按钮自定义+45
+		"sure":function(id){//确定
+			$("#"+id).remove();
+		},
+		"cancel":function(id){//取消
+			$("#"+id).remove();
+		}
+})
+</pre>
+<b>//弹窗提示信息 html<b>
+	<pre>
+$().shineonWin({
+		"type":"html",//弹窗类型input/txt/iframe/html
+		"title":"提示信息：",//标题
+		"position":"auto",//位置//auto为水平垂直居中，self为自定义传参+positionx,positiony
+		"content":'html',//html代码
+		"btn":[["cancel","取&nbsp;&nbsp;消"],["save","确&nbsp;&nbsp;定"]],//按钮自定义+45
+		"sure":function(id){//确定
+			$("#"+id).remove();
+		},
+		"cancel":function(id){//取消
+			$("#"+id).remove();
+		}
+})
+</pre>
+
+<b>//弹窗提示信息+iframe<b>
+<pre>
+	$().shineonWin({
+		"width":"540px",//弹窗宽度
+		"height":"400px",//弹窗高度
+		"type":"iframe",//弹窗类型input/inputtxt/iframe/txt
+		"title":"资源移动--",
+		"typeval":"${ctx}/resource/resource_movewin.jsp",//input操作后的值/iframe的src地址
+		"typewid":"100%",//iframe宽度
+		"typehei":"330px",//iframe高度
+		"position":"self",//位置信息，当前窗口居中//auto为水平垂直居中，self为自定义传参+positionx,positiony
+		"btnshow":"block",//显示按钮
+		"btn":[["cancel","取&nbsp;&nbsp;消","175px"],["save","确&nbsp;&nbsp;定"]],//按钮自定义+45
+		"sure":function(winid){//确定
+			//todo 
+			$("#"+winid).remove();
+		},
+		"cancel":function(winid){//取消
+			$("#"+winid).remove();
+		}
+	});
+</pre>
+<b>//弹窗提示信息+iframe+自定义postion x,y<b>
+<pre>
+	$().shineonWin({
+		"width":"540px",//弹窗宽度
+		"height":"400px",//弹窗高度
+		"type":"iframe",//弹窗类型input/inputtxt/iframe/txt
+		"title":"资源移动--",
+		"typeval":"${ctx}/resource/resource_movewin.jsp",//input操作后的值/iframe的src地址
+		"typewid":"100%",//iframe宽度
+		"typehei":"330px",//iframe高度
+		"position":"self",//位置信息，当前窗口居中//auto为水平垂直居中，self为自定义传参+positionx,positiony
+		"positionx":"100px",
+		"positiony":"100px",
+		"btnshow":"block",//显示按钮
+		"btn":[["cancel","取&nbsp;&nbsp;消","175px"],["save","确&nbsp;&nbsp;定"]],//按钮自定义+45
+		"sure":function(winid){//确定
+			//todo 
+			$("#"+winid).remove();
+		},
+		"cancel":function(winid){//取消
+			$("#"+winid).remove();
+		}
+	});
+</pre>
+
+	</body>
+</html>
