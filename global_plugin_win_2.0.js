@@ -122,7 +122,8 @@ $.fn.shineonWin = function(options,fahterid)
 				var allhei=document.body.scrollHeight;
 				var allwid = document.body.scrollWidth;
 				if(window.innerWidth<allwid){
-					$(".win").width(allwid).css({"left":"0","top":"0"});
+					$(".win").width(allwid);
+					$(".win .win_content").css({"left":"0","top":"0"});
 				}else{
 					$(".win").css("width","100%");
 				}
