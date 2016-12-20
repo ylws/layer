@@ -30,7 +30,8 @@ $.fn.shineonWin = function(options,fahterid)
 	"close":function(){},
 	"timeout":0,//无按钮，几秒后消失
 	"timefn":function(){},//消失后回调
-	"param":""//弹窗临时调用数据，供iframe内部调用或其他页面调用
+	"param":"",//弹窗临时调用数据，供iframe内部调用或其他页面调用
+	"bodyMinWid":1200,//body最小宽度值
 	},
 	winlen=0,
 	settings  = $.extend({},defaults,options),
@@ -49,8 +50,8 @@ $.fn.shineonWin = function(options,fahterid)
 		}
 		else
 		{//待处理
-			if(window.innerWidth<document.body.scrollWidth){
-				$("#win"+winlen).width(document.body.scrollWidth);
+			if(window.innerWidth<settings['bodyMinWid']){
+				$("#win"+winlen).width(settings['bodyMinWid']);
 				html+="<div class=\"win_content\" style=\"height: "+settings['height']+";width:"+settings['width']+";margin:auto\">";
 			}else{
 				html+="<div class=\"win_content\" style=\"height: "+settings['height']+";width:"+settings['width']+";left:"+(settings['positionx']=="auto"?($(window).width()/2-parseInt(settings['width'])/2)+"px":settings['positionx'])+";top:"+(settings['positiony']=="auto"?heis:settings['positiony'])+"\">";
@@ -96,9 +97,8 @@ $.fn.shineonWin = function(options,fahterid)
 			$("body").append(html);
 			var seeheight=$("body").height();
 			var allhei=document.body.scrollHeight;
-			var allwid = document.body.scrollWidth;
-			if(window.innerWidth<allwid){
-				$("#win"+winlen).width(allwid);
+			if(window.innerWidth<settings['bodyMinWid']){
+				$("#win"+winlen).width(settings['bodyMinWid']);
 			}
 			if(allhei<seeheight)
 			{
@@ -120,9 +120,8 @@ $.fn.shineonWin = function(options,fahterid)
 			if(winLen){
 				var seeheight=$("body").height();
 				var allhei=document.body.scrollHeight;
-				var allwid = document.body.scrollWidth;
-				if(window.innerWidth<allwid){
-					$(".win").width(allwid);
+				if(window.innerWidth<settings['bodyMinWid']){
+					$(".win").width(settings['bodyMinWid']);
 					$(".win .win_content").css({"left":"0","top":"0","margin":"auto"});
 				}else{
 					$(".win").css("width","100%");
@@ -136,7 +135,7 @@ $.fn.shineonWin = function(options,fahterid)
 					$(".win").height(allhei);
 				}
 			}
-		}, 100);
+		}, 200);
 	})
 	appendhtml();
 	if(settings['timeout']!=0)
