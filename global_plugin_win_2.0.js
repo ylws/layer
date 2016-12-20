@@ -23,8 +23,8 @@ $.fn.shineonWin = function(options,fahterid)
 	"content":'',//嵌入的html代码,文本
 	"btnshow":"block",//按钮显示隐藏block/none
 	"btn":[["cancel","取&nbsp;&nbsp;消"],["save","保&nbsp;&nbsp;存"]],//按钮自定义
-	"headshow":"block",
-	"scroll":"no",//no,yes,auto
+	"headshow":"block",//弹窗头部显示
+	"scroll":"no",//no,yes,auto//iframe滚动与否
 	"sure":function(){},
 	"cancel":function(){},
 	"close":function(){},
@@ -49,8 +49,13 @@ $.fn.shineonWin = function(options,fahterid)
 		}
 		else
 		{//待处理
+			if(window.innerWidth<document.body.scrollWidth){
+				$("#win"+winlen).width(document.body.scrollWidth);
+				html+="<div class=\"win_content\" style=\"height: "+settings['height']+";width:"+settings['width']+";margin:auto\">";
+			}else{
+				html+="<div class=\"win_content\" style=\"height: "+settings['height']+";width:"+settings['width']+";left:"+(settings['positionx']=="auto"?($(window).width()/2-parseInt(settings['width'])/2)+"px":settings['positionx'])+";top:"+(settings['positiony']=="auto"?heis:settings['positiony'])+"\">";
+			}
 			
-			html+="<div class=\"win_content\" style=\"height: "+settings['height']+";width:"+settings['width']+";left:"+(settings['positionx']=="auto"?($(window).width()/2-parseInt(settings['width'])/2)+"px":settings['positionx'])+";top:"+(settings['positiony']=="auto"?heis:settings['positiony'])+"\">";
 		}
 			html+=	"<div class=\"title\" style=\"display:"+settings['headshow']+"\">";
 			html+=		"<span class=\"menuname\">"+settings['title']+"</span>";
@@ -92,6 +97,10 @@ $.fn.shineonWin = function(options,fahterid)
 			$("body").append(html);
 			var seeheight=$("body").height();
 			var allhei=document.body.scrollHeight;
+			var allwid = document.body.scrollWidth;
+			if(window.innerWidth<allwid){
+				$("#win"+winlen).width(allwid);
+			}
 			if(allhei<seeheight)
 			{
 				$("#win"+winlen).height(seeheight);
