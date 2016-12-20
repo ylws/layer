@@ -93,7 +93,6 @@ $.fn.shineonWin = function(options,fahterid)
 			html+= "</div>";
 			html+="</div>";
 			html+="</div>";
-			
 			$("body").append(html);
 			var seeheight=$("body").height();
 			var allhei=document.body.scrollHeight;
@@ -111,6 +110,33 @@ $.fn.shineonWin = function(options,fahterid)
 			}
 			$("#win"+winlen).show();
 	};
+	var winresizeTimer = null;
+	window.addEventListener("resize",function(){
+		if (winresizeTimer){
+			 clearTimeout(winresizeTimer);
+		}
+		winresizeTimer = setTimeout(function(){
+			var winLen = $(".win").length;
+			if(winLen){
+				var seeheight=$("body").height();
+				var allhei=document.body.scrollHeight;
+				var allwid = document.body.scrollWidth;
+				if(window.innerWidth<allwid){
+					$(".win").width(allwid).css({"left":"0","top":"0"});
+				}else{
+					$(".win").css("width","100%");
+				}
+				if(allhei<seeheight)
+				{
+					$(".win").height(seeheight);
+				}
+				else
+				{
+					$(".win").height(allhei);
+				}
+			}
+		}, 100);
+	})
 	appendhtml();
 	if(settings['timeout']!=0)
 	{
