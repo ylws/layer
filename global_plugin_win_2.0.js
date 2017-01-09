@@ -33,7 +33,7 @@ $.fn.shineonWin = function(options,fahterid)
 	"timeout":0,//无按钮，几秒后消失
 	"timefn":function(){},//消失后回调
 	"param":"",//弹窗临时调用数据，供iframe内部调用或其他页面调用
-	"templates":{},//弹窗模板临时调用url,data数据，供iframe内部调用或其他页面调用[url,data]
+	"templates":false,//弹窗模板临时调用url,data数据，供iframe内部调用或其他页面调用{url:url,data:data}
 	"bodyMinWid":1200,//body最小宽度值
 	"iframesubfn":'init',//iframe调用子页面方法
 	},
@@ -120,7 +120,9 @@ $.fn.shineonWin = function(options,fahterid)
 			if(settings['type']=="iframe"){
 				$("#win"+winlen +" .iframe").on("load",function(){
 					var names = "iframe"+winlen;
-					window.frames[names][settings.iframesubfn](settings.templates);
+					if(settings.templates){
+						window.frames[names][settings.iframesubfn](settings.templates);
+					}
 				})
 			}
 	};
