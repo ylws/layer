@@ -36,6 +36,7 @@ $.fn.shineonWin = function(options,fahterid)
 	"templates":false,//弹窗模板临时调用url,data数据，供iframe内部调用或其他页面调用{url:url,data:data}
 	"bodyMinWid":1200,//body最小宽度值
 	"iframesubfn":'init',//iframe调用子页面方法
+	"titleEvent":{"event":true,"type":"pc"},//弹窗移动事件,指定event:true/false,type:pc/mobile
 	},
 	winlen=0,
 	settings  = $.extend({},defaults,options),
@@ -203,6 +204,98 @@ $.fn.shineonWin = function(options,fahterid)
 			}
 		}
 	}
+	if(settings.titleEvent.event){
+		if(settings.titleEvent.type == "pc"){
+			//添加title移动
+			var titlemoveflag = false;
+			$("#win"+winlen+" .title").mousedown(function(e){
+				document.onselectstart=function (){return false;}; 
+				titlemoveflag = false;
+				var _this = $(this);
+				var ev = window.event||e;
+				var downx = ev.pageX||ev.clientX;
+				var downy = ev.pageY||ev.clientY;
+				var parentleft = parseInt(_this.parent().css("left"));
+				var parenttop = parseInt(_this.parent().css("top"));
+				var parentwid = parseInt(_this.parent().css("width"));
+				var parenthei = parseInt(_this.parent().css("height"));
+				titlemoveflag = true;
+				$(this).mousemove(function(e){
+					var ev = window.event||e;
+					if(titlemoveflag){
+						var movex = ev.pageX||ev.clientX;
+						var movey = ev.pageY||ev.clientY;
+						var xval = movex-downx;//x移动距离
+						var yval = movey-downy;//y移动距离
+						var leftval = (parentleft+xval)<0?0:parentleft+xval;
+						var topval = (parenttop+yval)<0?0:(parenttop+yval);
+						leftval = leftval>(window.innerWidth-parentwid)?(window.innerWidth-parentwid):leftval;
+						topval = topval>(window.innerHeight-parenthei)?(window.innerHeight-parenthei):topval;
+						_this.parent().css({"left":leftval+"px","top":topval+"px"})
+					}else{
+						titlemoveflag = false;
+					}
+				})
+				$(document).mouseup(function(e){
+					var ev = window.event||e;
+					titlemoveflag = false;
+					document.onselectstart=null;
+				})
+				$(this).mouseout(function(e){
+					var ev = window.event||e;
+					titlemoveflag = false;
+					document.onselectstart=null;
+				})
+			})
+		}else{
+			//添加title移动
+			var titlemoveflag = false;
+			$("#win"+winlen+" .title").on("touchstart",function(e){
+				document.onselectstart=function (){return false;}; 
+				titlemoveflag = false;
+				var _this = $(this);
+				var ev = window.event||e;
+				var touch = ev.touches[0]; //获取第一个触点
+			    var downx  = Number(touch.pageX); //页面触点X坐标
+			    var downy = Number(touch.pageY); //页面触点Y坐标
+				var parentleft = parseInt(_this.parent().css("left"));
+				var parenttop = parseInt(_this.parent().css("top"));
+				var parentwid = parseInt(_this.parent().css("width"));
+				var parenthei = parseInt(_this.parent().css("height"));
+				titlemoveflag = true;
+				$(this).on("touchmove",function(e){
+					var ev = window.event||e;
+					if(titlemoveflag){
+						var touchmove  = ev.touches[0], //获取第一个触点
+					    movex  = Number(touchmove.pageX), //页面触点X坐标
+					    movey  = Number(touchmove.pageY); //页面触点Y坐标
+						var xval = movex-downx;//x移动距离
+						var yval = movey-downy;//y移动距离
+						var leftval = (parentleft+xval)<0?0:parentleft+xval;
+						var topval = (parenttop+yval)<0?0:(parenttop+yval);
+						leftval = leftval>(window.innerWidth-parentwid)?(window.innerWidth-parentwid):leftval;
+						topval = topval>(window.innerHeight-parenthei)?(window.innerHeight-parenthei):topval;
+						_this.parent().css({"left":leftval+"px","top":topval+"px"})
+					}else{
+						titlemoveflag = false;
+					}
+				})
+				$(document).on("touchend",function(e){
+					var ev = window.event||e;
+					titlemoveflag = false;
+					document.onselectstart=null;
+				})
+				$(this).mouseout(function(e){
+					var ev = window.event||e;
+					titlemoveflag = false;
+					document.onselectstart=null;
+				})
+			})
+		}
+		
+	}
+	
+	
 	
 	//console.log(settings['btn'].length)
 }
