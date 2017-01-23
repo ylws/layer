@@ -37,6 +37,7 @@ $.fn.shineonWin = function(options,fahterid)
 	"bodyMinWid":1200,//body最小宽度值
 	"iframesubfn":'init',//iframe调用子页面方法
 	"titleEvent":{"event":true,"type":"pc"},//弹窗移动事件,指定event:true/false,type:pc/mobile
+	"iframescrollLock":false,//iframe锁定父页面body.onmousewheel
 	},
 	winlen=0,
 	settings  = $.extend({},defaults,options),
@@ -167,6 +168,11 @@ $.fn.shineonWin = function(options,fahterid)
 		},settings['timeout'])
 		
 	}
+	if(settings.iframescrollLock){
+		document.body.onmousewheel = function(){
+			return false;
+		}
+	}
 	//点击关闭，隐藏播放窗口
 	var winobj=document.getElementsByClassName("win");
 	for(var i=0;i<winobj.length;i++ ){
@@ -176,6 +182,9 @@ $.fn.shineonWin = function(options,fahterid)
 					var parentid=this.parentNode.parentNode.parentNode.getAttribute("id");
 					settings['close']();
 					$("#"+parentid).remove();
+					if(settings.iframescrollLock){
+						document.body.onmousewheel = null;
+					}
 				},false)
 			}
 		}
@@ -188,6 +197,9 @@ $.fn.shineonWin = function(options,fahterid)
 				winobj[i].getElementsByClassName("save")[j].addEventListener("click",function(){
 					var parentid=this.parentNode.parentNode.parentNode.getAttribute("id");
 					settings['sure'](parentid);
+					if(settings.iframescrollLock){
+						document.body.onmousewheel = null;
+					}
 				},false)
 			}
 		}
@@ -200,6 +212,9 @@ $.fn.shineonWin = function(options,fahterid)
 				winobj[i].getElementsByClassName("cancel")[j].addEventListener("click",function(){
 					var parentid=this.parentNode.parentNode.parentNode.getAttribute("id");
 					settings['cancel'](parentid);
+					if(settings.iframescrollLock){
+						document.body.onmousewheel = null;
+					}
 				},false)
 			}
 		}
@@ -294,8 +309,5 @@ $.fn.shineonWin = function(options,fahterid)
 		}
 		
 	}
-	
-	
-	
 	//console.log(settings['btn'].length)
 }
