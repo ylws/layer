@@ -10,6 +10,7 @@ $.fn.shineonWin = function(options,fahterid)
 	"width":"287px",//弹窗宽度
 	"height":"215px",//弹窗高度
 	"type":"txt",//弹窗类型input/txt/iframe/html
+	"typehtmlfn":false,//html填充后执行方法
 	"typemargin":"0px",
 	"typepadding":"0px",
 	"typeval":"",//input操作后的值/iframe的src地址
@@ -38,6 +39,7 @@ $.fn.shineonWin = function(options,fahterid)
 	"iframesubfn":'init',//iframe调用子页面方法
 	"titleEvent":{"event":true,"type":"pc"},//弹窗移动事件,指定event:true/false,type:pc/mobile
 	"iframescrollLock":false,//iframe锁定父页面body.onmousewheel
+	"resize":true,//弹窗resize事件
 	},
 	winlen=0,
 	settings  = $.extend({},defaults,options),
@@ -128,34 +130,40 @@ $.fn.shineonWin = function(options,fahterid)
 				})
 			}
 	};
-	var winresizeTimer = null;
-	window.addEventListener("resize",function(){
-		if (winresizeTimer){
-			 clearTimeout(winresizeTimer);
-		}
-		winresizeTimer = setTimeout(function(){
-			var winLen = $(".win").length;
-			if(winLen){
-				var seeheight=$("body").height();
-				var allhei=document.body.scrollHeight;
-				if(window.innerWidth<settings['bodyMinWid']){
-					$(".win").width(settings['bodyMinWid']);
-					$(".win .win_content").css({"left":"0","top":"0","margin":"auto"});
-				}else{
-					$(".win").css("width","100%");
-				}
-				if(allhei<seeheight)
-				{
-					$(".win").height(seeheight);
-				}
-				else
-				{
-					$(".win").height(allhei);
-				}
+	if(settings.resize){
+		var winresizeTimer = null;
+		window.addEventListener("resize",function(){
+			if (winresizeTimer){
+				 clearTimeout(winresizeTimer);
 			}
-		}, 200);
-	})
+			winresizeTimer = setTimeout(function(){
+				var winLen = $(".win").length;
+				if(winLen){
+					var seeheight=$("body").height();
+					var allhei=document.body.scrollHeight;
+					if(window.innerWidth<settings['bodyMinWid']){
+						$(".win").width(settings['bodyMinWid']);
+						$(".win .win_content").css({"left":"0","top":"0","margin":"auto"});
+					}else{
+						$(".win").css("width","100%");
+					}
+					if(allhei<seeheight)
+					{
+						$(".win").height(seeheight);
+					}
+					else
+					{
+						$(".win").height(allhei);
+					}
+				}
+			}, 200);
+		})
+	}
+	
 	appendhtml();
+	if(typeof settings['typehtmlfn'] === 'function'){
+		settings['typehtmlfn']();
+	}
 	if(settings['timeout']!=0)
 	{
 		settings['btnshow']="none";
