@@ -228,6 +228,8 @@ $.fn.shineonWin = function(options,fahterid)
 		}
 	}
 	if(settings.titleEvent.event){
+		var scrollwid =  window.innerWidth - document.documentElement.clientWidth;
+		var scrollhei =  window.innerHeight - document.documentElement.clientHeight;
 		if(settings.titleEvent.type == "pc"){
 			//添加title移动
 			var titlemoveflag = false;
@@ -236,35 +238,34 @@ $.fn.shineonWin = function(options,fahterid)
 				titlemoveflag = false;
 				var _this = $(this);
 				var ev = window.event||e;
-				var downx = ev.pageX||ev.clientX;
-				var downy = ev.pageY||ev.clientY;
+				var downx = (ev.pageX||ev.clientX);
+				var downy = (ev.pageY||ev.clientY);
 				var parentleft = parseInt(_this.parent().css("left"));
 				var parenttop = parseInt(_this.parent().css("top"));
 				var parentwid = parseInt(_this.parent().css("width"));
 				var parenthei = parseInt(_this.parent().css("height"));
+				var comparex = window.innerWidth-parentwid+document.body.scrollLeft-scrollwid-4;
+				var comparey = window.innerHeight-parenthei+document.body.scrollTop-scrollhei-4;
 				titlemoveflag = true;
 				$(this).mousemove(function(e){
 					var ev = window.event||e;
 					if(titlemoveflag){
-						var movex = ev.pageX||ev.clientX;
-						var movey = ev.pageY||ev.clientY;
+						var movex = (ev.pageX||ev.clientX);
+						var movey = (ev.pageY||ev.clientY);
 						var xval = movex-downx;//x移动距离
 						var yval = movey-downy;//y移动距离
 						var leftval = (parentleft+xval)<0?0:parentleft+xval;
 						var topval = (parenttop+yval)<0?0:(parenttop+yval);
-						leftval = leftval>(window.innerWidth-parentwid)?(window.innerWidth-parentwid):leftval;
-						topval = topval>(window.innerHeight-parenthei)?(window.innerHeight-parenthei):topval;
-						_this.parent().css({"left":leftval+"px","top":topval+"px"})
+						
+						leftval = leftval>comparex?comparex:leftval;
+						topval = topval>comparey?comparey:topval;
+						
+						_this.parent().css({"left":leftval+"px","top":(topval<=document.body.scrollTop?document.body.scrollTop:topval)+"px"})
 					}else{
 						titlemoveflag = false;
 					}
 				})
 				$(document).mouseup(function(e){
-					var ev = window.event||e;
-					titlemoveflag = false;
-					document.onselectstart=null;
-				})
-				$(this).mouseout(function(e){
 					var ev = window.event||e;
 					titlemoveflag = false;
 					document.onselectstart=null;
@@ -285,6 +286,8 @@ $.fn.shineonWin = function(options,fahterid)
 				var parenttop = parseInt(_this.parent().css("top"));
 				var parentwid = parseInt(_this.parent().css("width"));
 				var parenthei = parseInt(_this.parent().css("height"));
+				var comparex = window.innerWidth-parentwid+document.body.scrollLeft-scrollwid-4;
+				var comparey = window.innerHeight-parenthei+document.body.scrollTop-scrollhei-4;
 				titlemoveflag = true;
 				$(this).on("touchmove",function(e){
 					var ev = window.event||e;
@@ -296,9 +299,10 @@ $.fn.shineonWin = function(options,fahterid)
 						var yval = movey-downy;//y移动距离
 						var leftval = (parentleft+xval)<0?0:parentleft+xval;
 						var topval = (parenttop+yval)<0?0:(parenttop+yval);
-						leftval = leftval>(window.innerWidth-parentwid)?(window.innerWidth-parentwid):leftval;
-						topval = topval>(window.innerHeight-parenthei)?(window.innerHeight-parenthei):topval;
-						_this.parent().css({"left":leftval+"px","top":topval+"px"})
+						
+						leftval = leftval>comparex?comparex:leftval;
+						topval = topval>comparey?comparey:topval;
+						_this.parent().css({"left":leftval+"px","top":(topval<=document.body.scrollTop?document.body.scrollTop:topval)+"px"})
 					}else{
 						titlemoveflag = false;
 					}
@@ -308,11 +312,11 @@ $.fn.shineonWin = function(options,fahterid)
 					titlemoveflag = false;
 					document.onselectstart=null;
 				})
-				$(this).mouseout(function(e){
-					var ev = window.event||e;
-					titlemoveflag = false;
-					document.onselectstart=null;
-				})
+//				$(this).mouseout(function(e){
+//					var ev = window.event||e;
+//					titlemoveflag = false;
+//					document.onselectstart=null;
+//				})
 			})
 		}
 		
