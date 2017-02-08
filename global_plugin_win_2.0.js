@@ -50,7 +50,8 @@ $.fn.shineonWin = function(options,fahterid)
 		}
 		var seeheight=document.documentElement.clientHeight;
 		var allhei=document.body.scrollHeight,heis;
-		heis=document.body.scrollTop+seeheight/2-parseInt(settings['height'])/2+"px";
+		var scrolltopval =document.body.scrollTop|| document.documentElement.scrollTop;
+		heis=scrolltopval+seeheight/2-parseInt(settings['height'])/2+"px";
 		var html="<div class=\"win\" id=\"win"+winlen+"\" param=\""+settings['param']+"\" >";
 		if(settings['position']=="auto")
 		{
