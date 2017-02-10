@@ -19,6 +19,7 @@ $.fn.shineonWin = function(options,fahterid)
 	"title":"标题",
 	"iframeid":"",
 	"iframeclass":"iframe",
+	"iframefullscreen":false,
 	"placehloder":"",
 	"position":"auto",//auto为水平垂直居中，self为自定义传参+positionx,positiony
 	"positionx":"auto",
@@ -39,7 +40,7 @@ $.fn.shineonWin = function(options,fahterid)
 	"iframesubfn":'init',//iframe调用子页面方法
 	"titleEvent":{"event":true,"type":"pc"},//弹窗移动事件,指定event:true/false,type:pc/mobile
 	"iframescrollLock":false,//iframe锁定父页面body.onmousewheel
-	"resize":true,//弹窗resize事件
+	"resize":true//弹窗resize事件
 	},
 	winlen=0,
 	settings  = $.extend({},defaults,options),
@@ -83,9 +84,9 @@ $.fn.shineonWin = function(options,fahterid)
 			else if(settings['type']=="iframe")
 			{
 				if(settings.iframeid!=""){
-					html+=	'<iframe name="iframe'+winlen+'" id="'+settings.iframeid+'" param="'+settings['param']+'" scrolling="'+settings['scroll']+'" frameborder="0" src="'+settings['typeval']+'" class="'+settings.iframeclass+'" style="margin:'+settings['typemargin']+';padding:'+settings['typepadding']+';width:'+settings['typewid']+';height:'+settings['typehei']+'"/>';
+					html+=	'<iframe allowfullscreen="'+settings.iframefullscreen+'" name="iframe'+winlen+'" id="'+settings.iframeid+'" param="'+settings['param']+'" scrolling="'+settings['scroll']+'" frameborder="0" src="'+settings['typeval']+'" class="'+settings.iframeclass+'" style="margin:'+settings['typemargin']+';padding:'+settings['typepadding']+';width:'+settings['typewid']+';height:'+settings['typehei']+'"/>';
 				}else{
-					html+=	'<iframe name="iframe'+winlen+'" param="'+settings['param']+'" scrolling="'+settings['scroll']+'" frameborder="0" src="'+settings['typeval']+'" class="'+settings.iframeclass+'" style="margin:'+settings['typemargin']+';padding:'+settings['typepadding']+';width:'+settings['typewid']+';height:'+settings['typehei']+'"/>';
+					html+=	'<iframe allowfullscreen="'+settings.iframefullscreen+'"  name="iframe'+winlen+'" param="'+settings['param']+'" scrolling="'+settings['scroll']+'" frameborder="0" src="'+settings['typeval']+'" class="'+settings.iframeclass+'" style="margin:'+settings['typemargin']+';padding:'+settings['typepadding']+';width:'+settings['typewid']+';height:'+settings['typehei']+'"/>';
 				}
 			}
 			else
