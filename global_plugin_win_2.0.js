@@ -49,7 +49,7 @@ $.fn.shineonWin = function(options,fahterid)
 		{
 			winlen=$(".win").length;
 		}
-		var seeheight=document.documentElement.clientHeight;
+		var seeheight=window.innerHeight;
 		var allhei=document.body.scrollHeight,heis;
 		var scrolltopval =document.body.scrollTop|| document.documentElement.scrollTop;
 		heis=scrolltopval+seeheight/2-parseInt(settings['height'])/2+"px";
@@ -70,7 +70,7 @@ $.fn.shineonWin = function(options,fahterid)
 		}
 			html+=	"<div class=\"title\" style=\"display:"+settings['headshow']+"\">";
 			html+=		"<span class=\"menuname\">"+settings['title']+"</span>";
-			html+=		"<span class=\"close\"></span>";
+			html+=		"<span class=\"winclose\"></span>";
 			html+=	"</div>";
 			if(settings['type']=="txt")
 			{
@@ -186,9 +186,9 @@ $.fn.shineonWin = function(options,fahterid)
 	//点击关闭，隐藏播放窗口
 	var winobj=document.getElementsByClassName("win");
 	for(var i=0;i<winobj.length;i++ ){
-		if(winobj[i].getElementsByClassName("close").length>0){
-			for(var j=0;j<winobj[i].getElementsByClassName("close").length;j++){//for ie8
-				winobj[i].getElementsByClassName("close")[0].addEventListener("click",function(){
+		if(winobj[i].getElementsByClassName("winclose").length>0){
+			for(var j=0;j<winobj[i].getElementsByClassName("winclose").length;j++){//for ie8
+				winobj[i].getElementsByClassName("winclose")[0].addEventListener("click",function(){
 					var parentid=this.parentNode.parentNode.parentNode.getAttribute("id");
 					settings['close']();
 					$("#"+parentid).remove();
